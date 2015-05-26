@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "babel-node --stage 0 src/",
     "test": "karma start --single-run",
     "test:watch": "karma start"
   },

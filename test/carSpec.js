@@ -1,14 +1,7 @@
 import {expect} from 'chai'
-
 import Car from '../src/car'
-
 import EngineBuilder from './fixtures/engineBuilder'
 
-let engine = new EngineBuilder().startWith( EngineBuilder.FAIL ).getInstance();
-
-engine.start()
-.then( () => console.log( 'Encendido' ) )
-.catch( () => console.log( 'ERROR' ) )
 
 describe( 'Car', () =>{
   it( 'should exists', () => {
@@ -16,6 +9,26 @@ describe( 'Car', () =>{
   } );
 
   describe( 'An instance', () =>{
+    it( 'When fail the engine the car is not started', ( done ) => {
+      let engine = new EngineBuilder().startWith( EngineBuilder.FAIL ).getInstance();
+      let car = new Car( engine );
+      car.start()
+      .then( () => {
+        expect( car.isStarted ).to.be.false
+        done()
+      } );
+    } );
+
+    it( 'When doens´t fail the engine the car is started', ( done ) => {
+      let engine = new EngineBuilder().startWith( EngineBuilder.SUCCESS ).getInstance();
+      let car = new Car( engine );
+      car.start()
+      .then( () => {
+        expect( car.isStarted ).to.be.true
+        done()
+      } );
+    } );
+
   } );
 } );
 
